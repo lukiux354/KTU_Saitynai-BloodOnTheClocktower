@@ -1,0 +1,411 @@
+openapi: 3.0.0
+info:
+  title: Blood on the Clocktower
+  description: Blood on the Clocktower API. Script -> Character -> Comment. Made by Lukas Navickas.
+  version: 1.0.0
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /scripts:
+    get:
+      summary: Get a list of SCRIPTS
+      tags:
+        - script
+      operationId: getAllScripts
+      responses:
+        "200":
+          description: A list of scripts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/script"
+              example:
+                - id: 1
+                  title: "Trouble Brewing"
+                  description: "An original Blood on the Clocktower script. Recommended for beginners."
+                - id: 2
+                  title: "Bad Moon Rising"
+                  description: "An original Blood on the Clocktower script. Recommended for experienced players."
+    post:
+      summary: "Create a SCRIPT"
+      description: "Create a script"
+      tags:
+        - script
+      operationId: createScript
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createScript"
+            example:
+              - title: "Catfishing"
+                description: "A script made by Jeff. Made for people who have played a lot of Trouble Brewing and want to spice things up."
+      responses:
+        "201":
+          $ref: "#/components/responses/singleScript"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "422":
+          $ref: "#/components/responses/unprocessableEntity"
+
+  /scripts/{scriptId}:
+    parameters:
+      - $ref: '#/components/parameters/scriptId'
+    get:
+      summary: Get a SCRIPT by ID
+      tags:
+        - script
+      operationId: getScript
+      responses:
+        "200":
+          $ref: "#/components/responses/singleScript"
+        "404":
+          $ref: "#/components/responses/notFound"
+    put:
+      summary: Update a SCRIPT by ID
+      tags:
+        - script
+      operationId: updateScript
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateScript"
+            example:
+              - description: "This script is made by Lukas. It is and advanced script showing off the character Atheist."
+      responses:
+        "200":
+          $ref: "#/components/responses/singleScript"
+        "400":
+          $ref: "#/components/responses/badRequest"
+        "404":
+          $ref: "#/components/responses/notFound"
+        "422":
+          $ref: "#/components/responses/unprocessableEntity"
+    delete:
+      summary: Delete a SCRIPT by ID
+      tags:
+        - script
+      operationId: deleteScript
+      responses:
+        "404":
+          $ref: "#/components/responses/notFound"
+        "204":
+          description: Script deleted
+  /scripts/{scriptId}/characters:
+    parameters:
+      - $ref: '#/components/parameters/scriptId'
+    get:
+      summary: Get CHARACTERS for a script
+      tags:
+        - characters
+      operationId: getCharacters
+      responses:
+        "200":
+          description: List of characters
+    post:
+      summary: "Create a CHARACTER"
+      description: 'Add a character'
+      tags:
+        - character
+      operationId: createCharacter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createCharacter"
+            example:
+              - title: "Empath"
+                body: "Each night, you learn how many of your 2 alive neighbors are evil."
+      responses:
+        '201':
+          description: OK
+  /scripts/{scriptId}/characters/{characterId}:
+    parameters:
+      - $ref: '#/components/parameters/scriptId'
+      - $ref: '#/components/parameters/characterId'
+    get:
+      summary: Get a specific CHARACTER for a script
+      tags:
+        - character
+      operationId: getCharacter
+      responses:
+        "200":
+          description: A single character
+    put:
+      summary: Update a CHARACTER for a script
+      tags:
+        - character
+      operationId: updateCharacter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateCharacter"
+            example:
+              - body: "Each night, wake the Empath. Show them fingers (0, 1, or 2) equaling the number of evil players neighbouring the Empath. Put the Empath to sleep."
+      responses:
+        "200":
+          description: Updated character
+    delete:
+      summary: Delete a CHARACTER for a script
+      tags:
+        - character
+      operationId: deleteCharacter
+      responses:
+        "204":
+          description: Character deleted
+  /scripts/{scriptId}/characters/{characterId}/comments:
+    parameters:
+      - $ref: '#/components/parameters/scriptId'
+      - $ref: '#/components/parameters/characterId'
+    get:
+      summary: Get COMMENTS for a specific character
+      tags:
+        - comment
+      operationId: getComments
+      responses:
+        "200":
+          description: List of comments
+    post:
+      summary: "Create a COMMENT"
+      description: "Add a comment for a specific character"
+      tags:
+        - comment
+      operationId: createComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createComment"
+            example:
+              - content: "I really like this character, because it interacts well with..."
+      responses:
+        "201":
+          description: OK
+  /scripts/{scriptId}/characters/{characterId}/comments/{commentId}:
+    parameters:
+      - $ref: '#/components/parameters/scriptId'
+      - $ref: '#/components/parameters/characterId'
+      - $ref: '#/components/parameters/commentId'
+    get:
+      summary: Get a specific COMMENT
+      tags:
+        - comment
+      operationId: getComment
+      responses:
+        "200":
+          description: A single comment
+    put:
+      summary: Update a COMMENT
+      tags:
+        - comment
+      operationId: updateComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateComment"
+            example:
+              - content: "I don't think this character fits in this script, because..."
+      responses:
+        "200":
+          description: Updated comment
+    delete:
+      summary: Delete a COMMENT
+      tags:
+        - comment
+      operationId: deleteComment
+      responses:
+        "204":
+          description: Comment deleted
+components:
+  schemas:
+    script:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+    createScript:
+      type: object
+      required:
+        - title
+        - description
+      properties:
+        title:
+          minLength: 2
+          maxLength: 50
+          pattern: "^[a-zA-Z0-9_]+$"  # Only allows letters, numbers, and underscores
+          type: string
+        description:
+          minLength: 5
+          maxLength: 300
+          pattern: "^[a-zA-Z0-9_]+$"  # Only allows letters, numbers, and underscores
+          type: string
+    updateScript:
+      type: object
+      properties:
+        description:
+          minLength: 5
+          maxLength: 300
+          pattern: "^[a-zA-Z0-9_]+$"  # Only allows letters, numbers, and underscores
+          type: string
+    character:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+    createCharacter:
+      type: object
+      required:
+        - title
+        - body
+      properties:
+        title:
+          minLength: 2
+          maxLength: 50
+          pattern: "^[a-zA-Z0-9_]+$"  # Only allows letters, numbers, and underscores
+          type: string
+        body:
+          minLength: 5
+          maxLength: 300
+          pattern: "^[a-zA-Z0-9_]+$"  # Only allows letters, numbers, and underscores
+          type: string
+    updateCharacter:
+      type: object
+      properties:
+        body:
+          minLength: 5
+          maxLength: 300
+          pattern: "^[a-zA-Z0-9_]+$"  # Only allows letters, numbers, and underscores
+          type: string
+    comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+    createComment:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          minLength: 1
+          maxLength: 200
+          pattern: "^[a-zA-Z0-9_]+$"  # Only allows letters, numbers, and underscores
+          type: string
+    updateComment:
+      type: object
+      properties:
+        content:
+          minLength: 1
+          maxLength: 200
+          pattern: "^[a-zA-Z0-9_]+$"  # Only allows letters, numbers, and underscores
+          type: string
+    problemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that identifies the problem type.
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code applicable to this problem.
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+        instance:
+          type: string
+          format: uri
+          description: A URI reference that identifies the specific occurrence of the problem.
+        errors:
+          type: object
+          description: A map of detailed errors for every property ([property => error])
+  responses:
+    singleScript:
+      description: A script
+      content:
+        application/json:
+          schema:
+            type: object
+            items:
+              $ref: "#/components/schemas/script"
+          example:
+            - id: 1
+              title: "Trouble Brewing"
+              description: "An original Blood on the Clocktower script. Recommended for beginners."
+    unprocessableEntity:
+      description: Unprocessable entity response
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            items:
+              $ref: "#/components/schemas/problemDetails"
+          example:
+            type: "https://tools.ietf.org/html/rfc4918#section-11.2"
+            title: "Unprocessable Entity"
+            status: 422
+            errors:
+              Name:
+                - "'Name' must not be empty."
+    badRequest:
+      description: Bad request response
+    notFound:
+      description: Resource was not found
+  parameters:
+    scriptId:
+      name: scriptId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: The unique identifier of the script
+    characterId:
+      name: characterId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: The unique identifier of the character
+    commentId:
+      name: commentId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: The unique identifier of the comment
+  
+tags:
+  - name: script
+    description: Operations related to scripts
+  - name: character
+    description: Operations related to characters
+  - name: comment
+    description: Operations related to comments
+
+externalDocs:
+  description: Find more info here
+  url: https://example.com/docs
