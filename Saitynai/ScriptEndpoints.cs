@@ -19,7 +19,7 @@ namespace Saitynai
                 return (await dbContext.Scripts.ToListAsync()).Select(script => script.ToDto());
             });
 
-            scriptsGroups.MapGet("/scripts/{scriptId}", async (int scriptId, ForumDbContext dbContext) =>
+            scriptsGroups.MapGet("/scripts/{scriptId:int}", async (int scriptId, ForumDbContext dbContext) =>
             {
                 var script = await dbContext.Scripts.FindAsync(scriptId);
                 return script == null ? Results.NotFound() : TypedResults.Ok(script.ToDto());
@@ -35,7 +35,7 @@ namespace Saitynai
                 return TypedResults.Created($"api/script/{script.Id}", script.ToDto());
             });
 
-            scriptsGroups.MapPut("/scripts/{scriptId}", async (UpdateScriptDto dto, int scriptId, ForumDbContext dbContext) =>
+            scriptsGroups.MapPut("/scripts/{scriptId:int}", async (UpdateScriptDto dto, int scriptId, ForumDbContext dbContext) =>
             {
                 var script = await dbContext.Scripts.FindAsync(scriptId);
                 if (script == null)
@@ -51,7 +51,7 @@ namespace Saitynai
                 return TypedResults.Ok(script.ToDto());
             });
 
-            scriptsGroups.MapDelete("/scripts/{scriptId}", async (int scriptId, ForumDbContext dbContext) =>
+            scriptsGroups.MapDelete("/scripts/{scriptId:int}", async (int scriptId, ForumDbContext dbContext) =>
             {
                 var script = await dbContext.Scripts.FindAsync(scriptId);
                 if (script == null)

@@ -9,7 +9,7 @@ namespace Saitynai
     {
         public static void AddCharacterApi(this WebApplication app)
         {
-            var charactersGroup = app.MapGroup("/api/scripts/{scriptId}").AddFluentValidationAutoValidation();
+            var charactersGroup = app.MapGroup("/api/scripts/{scriptId:int}").AddFluentValidationAutoValidation();
 
 
             charactersGroup.MapGet("characters", async (int scriptId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
@@ -18,7 +18,7 @@ namespace Saitynai
             });
 
 
-            charactersGroup.MapGet("/characters/{characterId}", async (int scriptId, int characterId, ForumDbContext dbContext) =>
+            charactersGroup.MapGet("/characters/{characterId:int}", async (int scriptId, int characterId, ForumDbContext dbContext) =>
             {
                 var character = await dbContext.Characters.FirstOrDefaultAsync(c => c.Id == characterId && c.Script.Id == scriptId);
                 return character == null ? Results.NotFound() : Results.Ok(character.ToDto());
@@ -45,7 +45,7 @@ namespace Saitynai
                 return TypedResults.Created($"/api/scripts/{scriptId}/characters/{character.Id}", character.ToDto());
             });
 
-            charactersGroup.MapPut("/characters/{characterId}", async (int scriptId, int characterId, UpdateCharacterDto dto, ForumDbContext dbContext) =>
+            charactersGroup.MapPut("/characters/{characterId:int}", async (int scriptId, int characterId, UpdateCharacterDto dto, ForumDbContext dbContext) =>
             {
                 var character = await dbContext.Characters.FirstOrDefaultAsync(c => c.Id == characterId && c.Script.Id == scriptId);
                 if (character == null)
@@ -61,7 +61,7 @@ namespace Saitynai
                 return TypedResults.Ok(character.ToDto());
             });
 
-            charactersGroup.MapDelete("/characters/{characterId}", async (int scriptId, int characterId, ForumDbContext dbContext) =>
+            charactersGroup.MapDelete("/characters/{characterId:int}", async (int scriptId, int characterId, ForumDbContext dbContext) =>
             {
                 var character = await dbContext.Characters.FirstOrDefaultAsync(c => c.Id == characterId && c.Script.Id == scriptId);
                 if (character == null)

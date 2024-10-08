@@ -9,33 +9,33 @@ namespace Saitynai
     {
         public static void AddCommentApi(this WebApplication app)
         {
-            var commentsGroup = app.MapGroup("/api/scripts/{scriptId}/characters/{characterId}/comments").AddFluentValidationAutoValidation();
+            var commentsGroup = app.MapGroup("/api/scripts/{scriptId:int}/characters/{characterId:int}/comments").AddFluentValidationAutoValidation();
 
-            // GET all comments for a specific character
             commentsGroup.MapGet("/", async (int scriptId, int characterId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
-                // Get the comments by joining through the Character entity
+                if (scriptId <= 0)
+                {
+                    return Results.NotFound("Script ID is required and must be greater than zero.");
+                }
+
                 var comments = await dbContext.Comments
                     .Where(comment => comment.Character.Id == characterId && comment.Character.Script.Id == scriptId)
                     .ToListAsync(cancellationToken);
 
-                // Check if no comments are found
                 if (comments.Count == 0)
                 {
                     return Results.NotFound("No comments found for this character.");
                 }
 
-                // Return the list of comments in DTO form
                 return TypedResults.Ok(comments.Select(comment => comment.ToDto()));
             });
 
-            // GET a specific comment by ID
-            commentsGroup.MapGet("/{commentId}", async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            commentsGroup.MapGet("/{commentId:int}", async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
                 var comment = await dbContext.Comments
                                              .FirstOrDefaultAsync(c => c.Id == commentId && c.Character.Id == characterId && c.Character.Script.Id == scriptId, cancellationToken);
 
-                if (comment == null)
+                if (comment == null || comment.Character == null || comment.Character.Script == null)
                 {
                     return Results.NotFound();
                 }
@@ -43,11 +43,10 @@ namespace Saitynai
                 return TypedResults.Ok(comment.ToDto());
             });
 
-            // POST a new comment for a character
             commentsGroup.MapPost("/", async (int scriptId, int characterId, CreateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
                 var character = await dbContext.Characters.FirstOrDefaultAsync(c => c.Id == characterId && c.Script.Id == scriptId, cancellationToken);
-                if (character == null)
+                if (character == null || character.Script == null)
                 {
                     return Results.NotFound();
                 }
@@ -65,13 +64,17 @@ namespace Saitynai
                 return TypedResults.Created($"/api/scripts/{scriptId}/characters/{characterId}/comments/{comment.Id}", comment.ToDto());
             });
 
-            // PUT (update) an existing comment
-            commentsGroup.MapPut("/{commentId}", async (int scriptId, int characterId, int commentId, UpdateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            commentsGroup.MapPut("/{commentId:int}", async (int scriptId, int characterId, int commentId, UpdateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
+                if (scriptId <= 0 || characterId <= 0 || commentId <= 0)
+                {
+                    return Results.NotFound();
+                }
+
                 var comment = await dbContext.Comments
                                              .FirstOrDefaultAsync(c => c.Id == commentId && c.Character.Id == characterId && c.Character.Script.Id == scriptId, cancellationToken);
 
-                if (comment == null)
+                if (comment == null || comment.Character == null || comment.Character.Script == null)
                 {
                     return Results.NotFound();
                 }
@@ -83,13 +86,12 @@ namespace Saitynai
                 return TypedResults.Ok(comment.ToDto());
             });
 
-            // DELETE a comment by ID
-            commentsGroup.MapDelete("/{commentId}", async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            commentsGroup.MapDelete("/{commentId:int}", async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
                 var comment = await dbContext.Comments
                                              .FirstOrDefaultAsync(c => c.Id == commentId && c.Character.Id == characterId && c.Character.Script.Id == scriptId, cancellationToken);
 
-                if (comment == null)
+                if (comment == null || comment.Character == null || comment.Character.Script == null)
                 {
                     return Results.NotFound();
                 }
