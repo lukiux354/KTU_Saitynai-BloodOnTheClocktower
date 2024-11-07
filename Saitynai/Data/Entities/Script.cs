@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations;
+using Saitynai.Auth.Model;
 
 namespace Saitynai.Data.Entities
 {
@@ -11,6 +13,11 @@ namespace Saitynai.Data.Entities
 
         //only can be set/seen by admin
         public bool IsBlocked { get; set; }
+
+        [Required]
+        public required string UserId { get; set; }
+        public ForumUser User { get; set; }
+
 
         public ScriptDto ToDto()
         {

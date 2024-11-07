@@ -37,7 +37,8 @@ namespace Saitynai
                     Title = dto.Title,
                     Body = dto.Body,
                     CreatedAt = DateTimeOffset.UtcNow,
-                    Script = script
+                    Script = script,
+                    UserId = ""
                 };
                 dbContext.Characters.Add(character);
                 await dbContext.SaveChangesAsync();

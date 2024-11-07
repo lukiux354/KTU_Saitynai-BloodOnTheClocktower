@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Saitynai.Data.Entities;
+using Microsoft.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Saitynai.Auth.Model;
 
 namespace Saitynai.Data
 {
-    public class ForumDbContext : DbContext
+    public class ForumDbContext : IdentityDbContext<ForumUser>
     {
         private readonly IConfiguration _configuration;
         public DbSet<Script> Scripts { get; set; }

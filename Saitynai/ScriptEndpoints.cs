@@ -27,7 +27,7 @@ namespace Saitynai
 
             scriptsGroups.MapPost("/scripts", async (CreateScriptDto dto, ForumDbContext dbContext) =>
             {
-                var script = new Script { Title = dto.Title, Description = dto.Description, CreatedAt = DateTimeOffset.UtcNow };
+                var script = new Script { Title = dto.Title, Description = dto.Description, CreatedAt = DateTimeOffset.UtcNow, UserId = "" };
                 dbContext.Scripts.Add(script);
 
                 await dbContext.SaveChangesAsync();

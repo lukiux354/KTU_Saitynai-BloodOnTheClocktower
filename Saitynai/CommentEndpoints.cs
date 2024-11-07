@@ -55,7 +55,8 @@ namespace Saitynai
                 {
                     Content = dto.Content,
                     CreatedAt = DateTimeOffset.UtcNow,
-                    Character = character
+                    Character = character,
+                    UserId = ""
                 };
 
                 dbContext.Comments.Add(comment);

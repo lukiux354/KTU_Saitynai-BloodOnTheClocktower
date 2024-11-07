@@ -7,8 +7,13 @@ dotnet tool install --global dotnet-ef
 dotnet add package FluentValidation
 dotnet add package FluentValidation.DependancyInjectionExtensions
 dotnet add package SharpGrip.FluentValidation.AutoValidation.Endpoints
+
++lab2 visi
+
+
 */
 
+//lab1 libraries
 using Microsoft.EntityFrameworkCore;
 using Saitynai.Data;
 using Saitynai.Data.Entities;
@@ -18,6 +23,14 @@ using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Results;
 using SharpGrip.FluentValidation.AutoValidation.Shared.Extensions;
 using Saitynai;
+using Saitynai.Auth.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+//lab2 libraries
+
+//
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ForumDbContext>();
@@ -26,6 +39,27 @@ builder.Services.AddFluentValidationAutoValidation(configuration =>
 {
     configuration.OverrideDefaultResultFactoryWith<ProblemDetailsResultFactory>();
 });
+
+builder.Services.AddIdentity<ForumUser, IdentityRole>()
+    .AddEntityFrameworkStores<ForumDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.MapInboundClaims = false;
+    options.TokenValidationParameters.ValidAudience = builder.Configuration["Jwt:ValidAudience"];
+    options.TokenValidationParameters.ValidIssuer = builder.Configuration["Jwt:ValidIssuer"];
+    options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]));
+
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 /*
@@ -42,6 +76,8 @@ app.AddScriptApi();
 app.AddCharacterApi();
 app.AddCommentApi();
 ////////////////////////////////////////////////////////////////////////////////////////////////
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
 
