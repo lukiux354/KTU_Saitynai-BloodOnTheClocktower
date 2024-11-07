@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System.Collections.Generic;
+using System.Text;
+using Azure.Identity;
 
 namespace Saitynai.Auth
 {
@@ -15,7 +17,9 @@ namespace Saitynai.Auth
         private readonly string? _audience;
         public JwtTokenService(IConfiguration configuration) 
         {
-            
+            _authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
+            _issuer = configuration["JWT:ValidIssuer"];
+            _audience = configuration["JWT:ValidAudience"];
         }
 
         public string CreateAccessToken(string userName, string userId, IEnumerable<string> roles)
@@ -38,8 +42,51 @@ namespace Saitynai.Auth
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
 
-            //29min vid
+        public string CreateRefreshToken(Guid sessionId, string userId, DateTime expires)
+        {
+            var authClaims = new List<Claim>() 
+            {
+                new (System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new (System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, userId),
+                new("SessionId", sessionId.ToString())
+            };
+
+            var token = new JwtSecurityToken
+            (
+                issuer: _issuer,
+                audience: _audience,
+                expires: expires,
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(_authSigningKey, SecurityAlgorithms.HmacSha256)
+
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public bool TryParseRefreshToken(string refreshToken, out ClaimsPrincipal? claims)
+        {
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler() { MapInboundClaims = false};
+                var validationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = _issuer,
+                    ValidAudience = _audience,
+                    IssuerSigningKey = _authSigningKey,
+                    ValidateLifetime = true
+                };
+
+                claims = tokenHandler.ValidateToken(refreshToken, validationParameters, out _);
+                return true;
+            }
+            catch
+            {
+                claims = null;
+                return false;
+            }
         }
     }
 }

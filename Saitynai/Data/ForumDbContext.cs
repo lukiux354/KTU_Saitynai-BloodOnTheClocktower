@@ -12,6 +12,7 @@ namespace Saitynai.Data
         public DbSet<Script> Scripts { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Session> Sessions { get; set; }
 
         public ForumDbContext(IConfiguration configuration)
         {

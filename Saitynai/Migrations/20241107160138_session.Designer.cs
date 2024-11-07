@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Saitynai.Data;
@@ -11,9 +12,11 @@ using Saitynai.Data;
 namespace Saitynai.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241107160138_session")]
+    partial class session
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

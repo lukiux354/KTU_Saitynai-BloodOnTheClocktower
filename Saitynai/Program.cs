@@ -29,7 +29,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 //lab2 libraries
-
+using Saitynai.Auth;
 //
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +39,12 @@ builder.Services.AddFluentValidationAutoValidation(configuration =>
 {
     configuration.OverrideDefaultResultFactoryWith<ProblemDetailsResultFactory>();
 });
+
+//lab2
+builder.Services.AddTransient<JwtTokenService>();
+builder.Services.AddTransient<SessionService>();
+builder.Services.AddScoped<AuthSeeder>();
+//////////////
 
 builder.Services.AddIdentity<ForumUser, IdentityRole>()
     .AddEntityFrameworkStores<ForumDbContext>()
@@ -62,6 +68,13 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+using var scope = app.Services.CreateScope();
+
+////var dbContext = scope.ServiceProvider.GetRequiredService<ForumDbContext>();
+
+var dbSeeder = scope.ServiceProvider.GetRequiredService<AuthSeeder>();
+await dbSeeder.SeedAsync();
+
 /*
     /api/v1/scripts GET List 200
     /api/v1/scripts POST Create 201
@@ -70,6 +83,7 @@ var app = builder.Build();
     /api/v1/scripts/{id} DELETE Remove 200/204
 */
 
+app.AddAuthApi();
 
 ////////////////////////////////////// API's /////////////////////////////////////////////////
 app.AddScriptApi();

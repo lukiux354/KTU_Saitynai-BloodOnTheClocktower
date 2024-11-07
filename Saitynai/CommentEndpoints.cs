@@ -2,6 +2,14 @@
 using Saitynai.Data;
 using Microsoft.EntityFrameworkCore;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Saitynai.Auth.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
 
 namespace Saitynai
 {
@@ -43,7 +51,7 @@ namespace Saitynai
                 return TypedResults.Ok(comment.ToDto());
             });
 
-            commentsGroup.MapPost("/", async (int scriptId, int characterId, CreateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            commentsGroup.MapPost("/", [Authorize(Roles = ForumRoles.ForumUser)] async (int scriptId, int characterId, CreateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
             {
                 var character = await dbContext.Characters.FirstOrDefaultAsync(c => c.Id == characterId && c.Script.Id == scriptId, cancellationToken);
                 if (character == null || character.Script == null)
@@ -56,7 +64,7 @@ namespace Saitynai
                     Content = dto.Content,
                     CreatedAt = DateTimeOffset.UtcNow,
                     Character = character,
-                    UserId = ""
+                    UserId = httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub)
                 };
 
                 dbContext.Comments.Add(comment);
@@ -65,7 +73,7 @@ namespace Saitynai
                 return TypedResults.Created($"/api/scripts/{scriptId}/characters/{characterId}/comments/{comment.Id}", comment.ToDto());
             });
 
-            commentsGroup.MapPut("/{commentId:int}", async (int scriptId, int characterId, int commentId, UpdateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            commentsGroup.MapPut("/{commentId:int}", [Authorize] async (int scriptId, int characterId, int commentId, UpdateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
             {
                 if (scriptId <= 0 || characterId <= 0 || commentId <= 0)
                 {
@@ -80,6 +88,12 @@ namespace Saitynai
                     return Results.NotFound();
                 }
 
+                if (!httpContext.User.IsInRole(ForumRoles.Admin) && httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub) != comment.UserId)
+                {
+                    //NotFound()
+                    return Results.Forbid();
+                }
+
                 comment.Content = dto.Content;
                 dbContext.Comments.Update(comment);
                 await dbContext.SaveChangesAsync(cancellationToken);
@@ -87,7 +101,7 @@ namespace Saitynai
                 return TypedResults.Ok(comment.ToDto());
             });
 
-            commentsGroup.MapDelete("/{commentId:int}", async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            commentsGroup.MapDelete("/{commentId:int}", [Authorize] async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
             {
                 var comment = await dbContext.Comments
                                              .FirstOrDefaultAsync(c => c.Id == commentId && c.Character.Id == characterId && c.Character.Script.Id == scriptId, cancellationToken);
@@ -95,6 +109,11 @@ namespace Saitynai
                 if (comment == null || comment.Character == null || comment.Character.Script == null)
                 {
                     return Results.NotFound();
+                }
+                if (!httpContext.User.IsInRole(ForumRoles.Admin) && httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub) != comment.UserId)
+                {
+                    //NotFound()
+                    return Results.Forbid();
                 }
 
                 dbContext.Comments.Remove(comment);
