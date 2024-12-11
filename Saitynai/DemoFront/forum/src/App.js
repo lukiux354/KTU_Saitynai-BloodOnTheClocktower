@@ -5,15 +5,15 @@ const App = () => {
     const [scripts, setScripts] = useState([]);
 
     useEffect(() => {
-        const loadTopics = async () => {
+        const loadScripts = async () => {
             //const response = await axios.get('https://sea-lion-app-vayj4.ondigitalocean.app/api/topics');
             //const response = await axios.get('http://localhost:5106/api/topics');
 			const response = await axios.get('https://urchin-app-6crcv.ondigitalocean.app/api/scripts');
             console.log(response.data.resource);
-            setTopics(response.data.resource);
+            setScripts(response.data.resource);
         };
 
-        loadTopics();
+        loadScripts();
     }, []);
 
     return (
