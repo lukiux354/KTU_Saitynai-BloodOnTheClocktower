@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './CommentList.css';
 
 const CommentList = ({ scriptId, characterId }) => {
     const [comments, setComments] = useState([]);

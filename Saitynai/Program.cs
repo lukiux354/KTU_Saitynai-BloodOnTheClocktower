@@ -38,7 +38,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:3001", "https://urchin-app-6crcv.ondigitalocean.app")
+        policy.WithOrigins("http://localhost:3000", "https://urchin-app-6crcv.ondigitalocean.app")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
