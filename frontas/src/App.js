@@ -2,23 +2,23 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 
 const App = () => {
-    const [topics, setTopics] = useState([]);
+    const [scripts, setScripts] = useState([]);
 
     useEffect(() => {
-        const loadTopics = async () => {
+        const loadScripts = async () => {
             const response = await axios.get('https://urchin-app-6crcv.ondigitalocean.app/api/scripts');
             //const response = await axios.get('http://localhost:3001/api/scripts');
             console.log(response.data.resource);
-            setTopics(response.data.resource);
+            setScripts(response.data.resource);
         };
 
-        loadTopics();
+        loadScripts();
     }, []);
 
     return (
         <>
-        {topics.map((topic, i) => (
-            <p key={i}>{topic.resource.title} {topic.resource.description}</p>
+        {scripts.map((script, i) => (
+            <p key={i}>{script.resource.title} {script.resource.description}</p>
         ))}
         </>
     )

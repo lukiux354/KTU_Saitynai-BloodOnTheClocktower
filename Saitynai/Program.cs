@@ -72,7 +72,14 @@ builder.Services.AddAuthentication(options =>
     options.MapInboundClaims = false;
     options.TokenValidationParameters.ValidAudience = builder.Configuration["Jwt:ValidAudience"];
     options.TokenValidationParameters.ValidIssuer = builder.Configuration["Jwt:ValidIssuer"];
-    options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]));
+    var jwtSecret = builder.Configuration["JWT:Secret"];
+    if (string.IsNullOrEmpty(jwtSecret))
+    {
+        throw new InvalidOperationException("JWT:Secret configuration value is missing.");
+    }
+
+    options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
+
 
 });
 
