@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
+using System.Xml.Linq;
 
 namespace Saitynai
 {
@@ -21,10 +22,24 @@ namespace Saitynai
 
             charactersGroup.MapGet("characters", async (int scriptId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
-                return (await dbContext.Characters
-                    .Where(c => c.Script.Id == scriptId)
-                    .ToListAsync(cancellationToken))
-                    .Select(character => character.ToDto());
+                if (scriptId <= 0)
+                {
+                    return Results.NotFound("Script ID is required and must be greater than zero.");
+                }
+
+                var characters = await dbContext.Characters
+                    .Where(character => character.Script.Id == scriptId)
+                    .ToListAsync(cancellationToken);
+
+                if (characters.Count == 0)
+                {
+                    return Results.NotFound("No Characters could be found for this Script.");
+                }
+                return TypedResults.Ok(characters.Select(character => character.ToDto()));
+                //return (await dbContext.Characters
+                //    .Where(c => c.Script.Id == scriptId)
+                //    .ToListAsync(cancellationToken))
+                //    .Select(character => character.ToDto());
             });
 
             charactersGroup.MapGet("/characters/{characterId:int}", async (int scriptId, int characterId, ForumDbContext dbContext) =>
