@@ -31,10 +31,10 @@ namespace Saitynai
                     .Where(character => character.Script.Id == scriptId)
                     .ToListAsync(cancellationToken);
 
-                if (characters.Count == 0)
-                {
-                    return Results.NotFound("No Characters could be found for this Script.");
-                }
+                //if (characters.Count == 0)
+                //{
+                //    return Results.NotFound("No Characters could be found for this Script.");
+                //}
                 return TypedResults.Ok(characters.Select(character => character.ToDto()));
                 //return (await dbContext.Characters
                 //    .Where(c => c.Script.Id == scriptId)

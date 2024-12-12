@@ -9,7 +9,7 @@ const ScriptDetails = ({ script }) => {
 
     return (
         <div className="script-details">
-            <h2>{script.title}</h2>
+            <h2>{script.title} ID:{script.id}</h2>
             <p>{script.description}</p>
             <CharacterList scriptId={script.id} />
         </div>

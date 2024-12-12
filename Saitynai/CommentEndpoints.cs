@@ -30,10 +30,10 @@ namespace Saitynai
                     .Where(comment => comment.Character.Id == characterId && comment.Character.Script.Id == scriptId)
                     .ToListAsync(cancellationToken);
 
-                if (comments.Count == 0)
-                {
-                    return Results.NotFound("No comments found for this character.");
-                }
+                //if (comments.Count == 0)
+                //{
+                //    return Results.NotFound("No comments found for this character.");
+                //}
 
                 return TypedResults.Ok(comments.Select(comment => comment.ToDto()));
             });

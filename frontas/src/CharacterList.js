@@ -21,7 +21,7 @@ const CharacterList = ({ scriptId }) => {
             <ul>
                 {characters.map(character => (
                     <li key={character.id}>
-                        {character.title}
+                        {character.title} ID:{character.id}
                         <CommentList characterId={character.id} />
                     </li>
                 ))}
