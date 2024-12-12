@@ -36,12 +36,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("AllowSpecificOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:3001").AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("http://localhost:3001", "https://urchin-app-6crcv.ondigitalocean.app")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
-
 });
+
+
 
 
 
@@ -86,7 +89,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-app.UseCors();
+app.UseCors("AllowSpecificOrigins");
 
 using var scope = app.Services.CreateScope();
 
