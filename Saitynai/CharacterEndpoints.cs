@@ -19,12 +19,13 @@ namespace Saitynai
         {
             var charactersGroup = app.MapGroup("/api/scripts/{scriptId:int}").AddFluentValidationAutoValidation();
 
-
             charactersGroup.MapGet("characters", async (int scriptId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
-                return (await dbContext.Characters.ToListAsync(cancellationToken)).Select(script => script.ToDto());
+                return (await dbContext.Characters
+                    .Where(c => c.Script.Id == scriptId)
+                    .ToListAsync(cancellationToken))
+                    .Select(character => character.ToDto());
             });
-
 
             charactersGroup.MapGet("/characters/{characterId:int}", async (int scriptId, int characterId, ForumDbContext dbContext) =>
             {
@@ -42,7 +43,6 @@ namespace Saitynai
 
                 if (!httpContext.User.IsInRole(ForumRoles.Admin) && httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub) != script.UserId)
                 {
-                    //NotFound()
                     return Results.Forbid();
                 }
 
@@ -70,7 +70,6 @@ namespace Saitynai
 
                 if (!httpContext.User.IsInRole(ForumRoles.Admin) && httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub) != character.UserId)
                 {
-                    //NotFound()
                     return Results.Forbid();
                 }
 
@@ -91,7 +90,6 @@ namespace Saitynai
                 }
                 if (!httpContext.User.IsInRole(ForumRoles.Admin) && httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub) != character.UserId)
                 {
-                    //NotFound()
                     return Results.Forbid();
                 }
 
@@ -100,7 +98,6 @@ namespace Saitynai
 
                 return TypedResults.NoContent();
             });
-
         }
     }
 }

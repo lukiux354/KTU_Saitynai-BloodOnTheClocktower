@@ -1,27 +1,23 @@
-import {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import ScriptList from './ScriptList';
+import ScriptDetails from './ScriptDetails';
+import './App.css';
 
 const App = () => {
-    const [scripts, setScripts] = useState([]);
-
-    useEffect(() => {
-        const loadScripts = async () => {
-            const response = await axios.get('https://urchin-app-6crcv.ondigitalocean.app/api/scripts');
-            //const response = await axios.get('http://localhost:3001/api/scripts');
-            console.log(response.data.resource);
-            setScripts(response.data.resource);
-        };
-
-        loadScripts();
-    }, []);
+    const [selectedScript, setSelectedScript] = useState(null);
 
     return (
-        <>
-        {scripts.map((script, i) => (
-            <p key={i}>{script.resource.title} {script.resource.description}</p>
-        ))}
-        </>
-    )
+        <div className="app">
+            <Header />
+            <main className="content">
+                <ScriptList onSelectScript={setSelectedScript} />
+                <ScriptDetails script={selectedScript} />
+            </main>
+            <Footer />
+        </div>
+    );
 }
 
 export default App;
