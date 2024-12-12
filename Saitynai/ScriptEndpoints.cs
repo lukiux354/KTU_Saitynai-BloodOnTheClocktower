@@ -17,7 +17,6 @@ namespace Saitynai
     {
 
 
-
         public static void AddScriptApi(this WebApplication app)
         {
             var scriptsGroups = app.MapGroup("/api").AddFluentValidationAutoValidation();
