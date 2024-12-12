@@ -20,7 +20,7 @@ namespace Saitynai
         {
             var charactersGroup = app.MapGroup("/api/scripts/{scriptId:int}").AddFluentValidationAutoValidation();
 
-            charactersGroup.MapGet("characters", async (int scriptId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            charactersGroup.MapGet("/characters", async (int scriptId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
                 if (scriptId <= 0)
                 {

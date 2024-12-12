@@ -17,9 +17,9 @@ namespace Saitynai
     {
         public static void AddCommentApi(this WebApplication app)
         {
-            var commentsGroup = app.MapGroup("/api/scripts/{scriptId:int}/characters/{characterId:int}/comments").AddFluentValidationAutoValidation();
+            var commentsGroup = app.MapGroup("/api/scripts/{scriptId:int}/characters/{characterId:int}").AddFluentValidationAutoValidation();
 
-            commentsGroup.MapGet("/", async (int scriptId, int characterId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            commentsGroup.MapGet("/comments", async (int scriptId, int characterId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
                 if (scriptId <= 0)
                 {
@@ -38,7 +38,7 @@ namespace Saitynai
                 return TypedResults.Ok(comments.Select(comment => comment.ToDto()));
             });
 
-            commentsGroup.MapGet("/{commentId:int}", async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
+            commentsGroup.MapGet("/comments/{commentId:int}", async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken) =>
             {
                 var comment = await dbContext.Comments
                                              .FirstOrDefaultAsync(c => c.Id == commentId && c.Character.Id == characterId && c.Character.Script.Id == scriptId, cancellationToken);
@@ -51,10 +51,10 @@ namespace Saitynai
                 return TypedResults.Ok(comment.ToDto());
             });
 
-            commentsGroup.MapPost("/", [Authorize(Roles = ForumRoles.ForumUser)] async (int scriptId, int characterId, CreateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
+            commentsGroup.MapPost("/comments/", [Authorize(Roles = ForumRoles.ForumUser)] async (int scriptId, int characterId, CreateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
             {
                 var character = await dbContext.Characters.FirstOrDefaultAsync(c => c.Id == characterId && c.Script.Id == scriptId, cancellationToken);
-                if (character == null || character.Script == null)
+                if (character == null)
                 {
                     return Results.NotFound();
                 }
@@ -73,7 +73,7 @@ namespace Saitynai
                 return TypedResults.Created($"/api/scripts/{scriptId}/characters/{characterId}/comments/{comment.Id}", comment.ToDto());
             });
 
-            commentsGroup.MapPut("/{commentId:int}", [Authorize] async (int scriptId, int characterId, int commentId, UpdateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
+            commentsGroup.MapPut("/comments/{commentId:int}", [Authorize] async (int scriptId, int characterId, int commentId, UpdateCommentDto dto, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
             {
                 if (scriptId <= 0 || characterId <= 0 || commentId <= 0)
                 {
@@ -101,7 +101,7 @@ namespace Saitynai
                 return TypedResults.Ok(comment.ToDto());
             });
 
-            commentsGroup.MapDelete("/{commentId:int}", [Authorize] async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
+            commentsGroup.MapDelete("/comments/{commentId:int}", [Authorize] async (int scriptId, int characterId, int commentId, ForumDbContext dbContext, CancellationToken cancellationToken, HttpContext httpContext) =>
             {
                 var comment = await dbContext.Comments
                                              .FirstOrDefaultAsync(c => c.Id == commentId && c.Character.Id == characterId && c.Character.Script.Id == scriptId, cancellationToken);
