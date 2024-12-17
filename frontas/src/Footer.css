@@ -1,6 +1,50 @@
 .footer {
-    background-color: #333;
+    background-color: #343a40;
     color: white;
-    padding: 1rem;
-    text-align: center;
-}
+    padding: 20px;
+    margin-top: 50px;
+  }
+  
+  .footer h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .footer ul {
+    padding: 0;
+    list-style: none;
+  }
+  
+  .footer ul li {
+    margin: 10px 0;
+  }
+  
+  .footer ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .footer ul li a:hover {
+    color: #61dafb;
+  }
+  
+  .social-icon {
+    margin: 0 10px;
+    color: white;
+  }
+  
+  .social-icon:hover {
+    color: #61dafb;
+  }
+  
+  .footer-bottom {
+    font-size: 0.9rem;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .footer .text-center {
+      margin-bottom: 20px;
+    }
+  }
+  

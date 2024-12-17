@@ -1,0 +1,35 @@
+/* Card animation */
+.script-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+.script-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+.script-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+.script-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 300ms, transform 300ms;
+}
+
+/* Fade animation for selected script */
+.fade-enter {
+    opacity: 0;
+}
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+.fade-exit {
+    opacity: 1;
+}
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
