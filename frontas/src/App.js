@@ -83,10 +83,10 @@ function App() {
       {/* Routes */}
       <div className="flex-grow-1">
         <Routes>
-          <Route path="/" element={<ScriptList />} />
-          <Route path="/scripts/:scriptId/characters/:characterId" element={<CharacterDetails />} />
-          <Route path="/about" element={<About />} /> {/* Use the About component */}
-          <Route path="/scripts" element={<ProtectedRoute element={<ScriptList />} authToken={authToken} />} />
+          <Route path="/KTU_Saitynai-BloodOnTheClocktower/" element={<ScriptList />} />
+          <Route path="/KTU_Saitynai-BloodOnTheClocktower/scripts/:scriptId/characters/:characterId" element={<CharacterDetails />} />
+          <Route path="/KTU_Saitynai-BloodOnTheClocktower/about" element={<About />} /> {/* Use the About component */}
+          <Route path="/KTU_Saitynai-BloodOnTheClocktower/scripts" element={<ProtectedRoute element={<ScriptList />} authToken={authToken} />} />
         </Routes>
       </div>
 
