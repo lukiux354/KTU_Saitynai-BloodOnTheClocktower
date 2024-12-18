@@ -59,7 +59,7 @@ function App() {
       {/* Navbar */}
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="/">Blood on the Clocktower</Navbar.Brand>
+          <Navbar.Brand href="/KTU_Saitynai-BloodOnTheClocktower/">Blood on the Clocktower</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-nav" />
           <Navbar.Collapse id="navbar-nav">
             <Nav className="ml-auto">
