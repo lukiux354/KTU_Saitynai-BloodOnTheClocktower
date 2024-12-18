@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, Link, useNavigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, Button, Modal } from 'react-bootstrap';
 import ScriptList from './components/ScriptList';
 import CharacterDetails from './components/CharacterDetail';
@@ -81,14 +81,27 @@ function App() {
       </Navbar>
 
       {/* Routes */}
+      //<div className="flex-grow-1">
+      //  <Routes>
+      //    <Route path="/KTU_Saitynai-BloodOnTheClocktower/" element={<ScriptList />} />
+      //    <Route path="/KTU_Saitynai-BloodOnTheClocktower/scripts/:scriptId/characters/:characterId" element={<CharacterDetails />} />
+      //    <Route path="/KTU_Saitynai-BloodOnTheClocktower/about" element={<About />} /> {/* Use the About component */}
+      //    <Route path="/KTU_Saitynai-BloodOnTheClocktower/scripts" element={<ProtectedRoute element={<ScriptList />} authToken={authToken} />} />
+      //  </Routes>
+      //</div>
+	  <Router>
       <div className="flex-grow-1">
         <Routes>
-          <Route path="/KTU_Saitynai-BloodOnTheClocktower/" element={<ScriptList />} />
-          <Route path="/KTU_Saitynai-BloodOnTheClocktower/scripts/:scriptId/characters/:characterId" element={<CharacterDetails />} />
-          <Route path="/KTU_Saitynai-BloodOnTheClocktower/about" element={<About />} /> {/* Use the About component */}
-          <Route path="/KTU_Saitynai-BloodOnTheClocktower/scripts" element={<ProtectedRoute element={<ScriptList />} authToken={authToken} />} />
+          <Route path="/" element={<ScriptList />} />
+          <Route path="/scripts/:scriptId/characters/:characterId" element={<CharacterDetails />} />
+          <Route path="/about" element={<About />} />
+          <Route
+            path="/scripts"
+            element={<ProtectedRoute element={<ScriptList />} authToken={authToken} />}
+          />
         </Routes>
       </div>
+    </Router>
 
       {/* Login Modal */}
       <Modal show={showLoginModal} onHide={handleCloseLoginModal}>
