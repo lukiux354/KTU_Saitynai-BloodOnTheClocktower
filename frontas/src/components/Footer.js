@@ -34,7 +34,7 @@ const Footer = () => {
                                 </a>
                             </li>
                             <li className="mx-3">
-                                <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer">
+                                <a href="" target="_blank" rel="noopener noreferrer">
                                     <FaArrowUpRightDots size={30} className="social-icon" />
                                 </a>
                             </li>

@@ -97,7 +97,7 @@ const CharacterList = ({ scriptId }) => {
 
                                 <Button
                                     variant="info"
-                                    href={`/scripts/${scriptId}/characters/${character.id}`}
+                                    href={`/KTU_Saitynai-BloodOnTheClocktower/scripts/${scriptId}/characters/${character.id}`}
                                     className="mr-2"
                                 >
                                     Read More
