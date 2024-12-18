@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/KTU_Saitynai-BloodOnTheClocktower/static/css/main.cdd0766f.css",
-    "main.js": "/KTU_Saitynai-BloodOnTheClocktower/static/js/main.ba8ca0a5.js",
+    "main.js": "/KTU_Saitynai-BloodOnTheClocktower/static/js/main.db39b882.js",
     "static/js/488.58eb8e4f.chunk.js": "/KTU_Saitynai-BloodOnTheClocktower/static/js/488.58eb8e4f.chunk.js",
     "static/media/AboutUs.jpg": "/KTU_Saitynai-BloodOnTheClocktower/static/media/AboutUs.42752c4a09f0b27be264.jpg",
     "index.html": "/KTU_Saitynai-BloodOnTheClocktower/index.html",
     "main.cdd0766f.css.map": "/KTU_Saitynai-BloodOnTheClocktower/static/css/main.cdd0766f.css.map",
-    "main.ba8ca0a5.js.map": "/KTU_Saitynai-BloodOnTheClocktower/static/js/main.ba8ca0a5.js.map",
+    "main.db39b882.js.map": "/KTU_Saitynai-BloodOnTheClocktower/static/js/main.db39b882.js.map",
     "488.58eb8e4f.chunk.js.map": "/KTU_Saitynai-BloodOnTheClocktower/static/js/488.58eb8e4f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cdd0766f.css",
-    "static/js/main.ba8ca0a5.js"
+    "static/js/main.db39b882.js"
   ]
 }
