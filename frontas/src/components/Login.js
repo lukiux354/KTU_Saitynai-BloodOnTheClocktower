@@ -67,7 +67,7 @@ const LoginForm = ({ setAuthToken, handleCloseModal }) => {
 
   const handleCloseSuccessModal = () => {
     setShowSuccessModal(false); // Close the success modal
-    navigate('/'); // Redirect to home page after the modal is closed
+    navigate('/KTU_Saitynai-BloodOnTheClocktower/'); // Redirect to home page after the modal is closed
     window.location.reload(); // This will refresh the page after login
     handleCloseModal(); // Close the login modal as well
   };
