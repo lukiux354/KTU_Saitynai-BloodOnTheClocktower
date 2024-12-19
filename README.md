@@ -89,19 +89,22 @@ Can edit and delete any script, character, or comment.
 
 ## 3.2 Atitinkamo CHARACTER puslapis
 ### Wireframe
+![image (2)](https://github.com/user-attachments/assets/dadf9657-3088-4608-99ad-fad202f1b13c)
 
 ### Realus pavyzdys
 
 ## 3.3 Prisijungimo forma
 ### Wireframe
+![image (4)](https://github.com/user-attachments/assets/2108fdeb-9e5d-417f-84fe-5827abc8fa51)
 
 Panašaus principo wireframe pritaikomas ir registracijai, tačiau atsiranda papildomas email langas.
 ### Realus pavyzdys (prisijungimas)
 
 ### Realus pavyzdys (registracija)
 
-## 3.3 SCRIPT, CHARACTER kūrimo forma
+## 3.4 SCRIPT, CHARACTER kūrimo forma
 ### Wireframe
+![image (3)](https://github.com/user-attachments/assets/63fb2e07-e8a0-4936-bc42-d2b2febb5399)
 
 Panašaus principo wireframe pritaikomas ir kitiems kūrumo/redagavimo langams
 ### Realus pavyzdys (kuriamas naujas SCRIPT)
