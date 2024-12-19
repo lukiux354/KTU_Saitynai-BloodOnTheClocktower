@@ -78,3 +78,43 @@ Can edit and delete any script, character, or comment.
 
 
 # 2. Technologijų aprašymas
+
+# 3. Naudotojo sąsaja
+## 3.1 Pagrindinis puslapis
+### Wireframe
+![image (1)](https://github.com/user-attachments/assets/8d823ec5-3998-4c2a-a44e-a73444876f21)
+
+### Realus pavyzdys
+![image](https://github.com/user-attachments/assets/fb8043a9-1e45-4a7b-94c6-0427b260d145)
+
+## 3.2 Atitinkamo CHARACTER puslapis
+### Wireframe
+
+### Realus pavyzdys
+
+## 3.3 Prisijungimo forma
+### Wireframe
+
+Panašaus principo wireframe pritaikomas ir registracijai, tačiau atsiranda papildomas email langas.
+### Realus pavyzdys (prisijungimas)
+
+### Realus pavyzdys (registracija)
+
+## 3.3 SCRIPT, CHARACTER kūrimo forma
+### Wireframe
+
+Panašaus principo wireframe pritaikomas ir kitiems kūrumo/redagavimo langams
+### Realus pavyzdys (kuriamas naujas SCRIPT)
+
+### Realus pavyzdys (redaguojamas SCRIPT)
+
+### Realus pavyzdys (kuriamas naujas CHARACTER)
+
+### Realus pavyzdys (redaguojamas CHARACTER)
+
+# 4 API Specifikacija
+
+
+
+
+
