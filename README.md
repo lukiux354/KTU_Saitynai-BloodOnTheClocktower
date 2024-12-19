@@ -8,6 +8,9 @@ Originaliame oficialiame žaidime šiuo metu egzistuoja 3 skirtingi rolių rinki
 # Sistemos paskirtis 
 Turėti vieną vietą, kurioje visi žmonės gali kurti, talpinti ir rasti kitų žmonių sukurtus rolių rinkinius, dalintis patarimais ir vertinti vieni kitų „kūrinius“.
 
+# Funkciniai reikalavimai
+Vienas iš funkcinių reikalavimų – galimybė valdyti visus tris resursus (script, character, comment) atitinkamai pagal savo roles. Taip pat reikia realizuoti vartotojo autentifikaciją ir autorizaciją.
+
 # Overview
 This API project is designed to manage a hierarchy of entities inspired by the board game Blood on the Clocktower. The hierarchy is structured as follows:
 
