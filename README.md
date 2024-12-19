@@ -92,6 +92,7 @@ Can edit and delete any script, character, or comment.
 ![image (2)](https://github.com/user-attachments/assets/dadf9657-3088-4608-99ad-fad202f1b13c)
 
 ### Realus pavyzdys
+![image](https://github.com/user-attachments/assets/06e375c1-93db-4086-8c39-9801a1a8d14c)
 
 ## 3.3 Prisijungimo forma
 ### Wireframe
@@ -99,8 +100,10 @@ Can edit and delete any script, character, or comment.
 
 Panašaus principo wireframe pritaikomas ir registracijai, tačiau atsiranda papildomas email langas.
 ### Realus pavyzdys (prisijungimas)
+![image](https://github.com/user-attachments/assets/f3b069da-5ced-41f0-8c43-6c38c292b9a7)
 
 ### Realus pavyzdys (registracija)
+![image](https://github.com/user-attachments/assets/f50d7377-3987-4e78-93d5-22b902758467)
 
 ## 3.4 SCRIPT, CHARACTER kūrimo forma
 ### Wireframe
@@ -108,12 +111,16 @@ Panašaus principo wireframe pritaikomas ir registracijai, tačiau atsiranda pap
 
 Panašaus principo wireframe pritaikomas ir kitiems kūrumo/redagavimo langams
 ### Realus pavyzdys (kuriamas naujas SCRIPT)
+![image](https://github.com/user-attachments/assets/a496f92a-1ce7-48ee-8e24-99b2fc154aca)
 
 ### Realus pavyzdys (redaguojamas SCRIPT)
+![image](https://github.com/user-attachments/assets/ee7c1154-a706-437c-85d3-4fe50d6a1b25)
 
 ### Realus pavyzdys (kuriamas naujas CHARACTER)
+![image](https://github.com/user-attachments/assets/d06005f1-2889-4574-a2d1-d99c85add22e)
 
 ### Realus pavyzdys (redaguojamas CHARACTER)
+![image](https://github.com/user-attachments/assets/425eb310-d554-408d-8bff-16bac2892aad)
 
 # 4 API Specifikacija
 
