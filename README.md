@@ -78,6 +78,8 @@ Can edit and delete any script, character, or comment.
 
 
 # 2. Technologijų aprašymas
+Projekto ‚Frontend‘ bus kuriamas su React technologija. Duomenų bazė – PostgreSQL. Serverio pusė - naudojant .Net Core Web API Sistemos architektūra:
+![image](https://github.com/user-attachments/assets/31dbeb99-3d02-4cb2-a821-104499a22425)
 
 # 3. Naudotojo sąsaja
 ## 3.1 Pagrindinis puslapis
