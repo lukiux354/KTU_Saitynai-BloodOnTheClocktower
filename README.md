@@ -37,6 +37,7 @@ The API exposes standard CRUD (Create, Read, Update, Delete) operations for thes
 * **Architecture:** RESTful API
 
 **System Architecture:**
+
 ![System Architecture](https://github.com/user-attachments/assets/31dbeb99-3d02-4cb2-a821-104499a22425)
 
 ## Endpoint Overview
@@ -90,26 +91,33 @@ The API uses **JWT (JSON Web Tokens)**. A valid token must be included in the re
 
 ### 1. Main Page
 **Wireframe:**
+
 ![Main Page Wireframe](https://github.com/user-attachments/assets/8d823ec5-3998-4c2a-a44e-a73444876f21)
 
 **Implementation:**
+
 ![Main Page Real](https://github.com/user-attachments/assets/fb8043a9-1e45-4a7b-94c6-0427b260d145)
 
 ### 2. Character Page
 **Wireframe:**
+
 ![Character Page Wireframe](https://github.com/user-attachments/assets/dadf9657-3088-4608-99ad-fad202f1b13c)
 
 **Implementation:**
+
 ![Character Page Real](https://github.com/user-attachments/assets/06e375c1-93db-4086-8c39-9801a1a8d14c)
 
 ### 3. Authentication
 **Wireframe:**
+
 ![Login Wireframe](https://github.com/user-attachments/assets/2108fdeb-9e5d-417f-84fe-5827abc8fa51)
 
 **Login Implementation:**
+
 ![Login Real](https://github.com/user-attachments/assets/f3b069da-5ced-41f0-8c43-6c38c292b9a7)
 
 **Register Implementation:**
+
 ![Register Real](https://github.com/user-attachments/assets/f50d7377-3987-4e78-93d5-22b902758467)
 
 ### 4. Creation Forms
