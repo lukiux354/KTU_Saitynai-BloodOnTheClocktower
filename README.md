@@ -114,18 +114,23 @@ The API uses **JWT (JSON Web Tokens)**. A valid token must be included in the re
 
 ### 4. Creation Forms
 **Wireframe:**
+
 ![Creation Form Wireframe](https://github.com/user-attachments/assets/63fb2e07-e8a0-4936-bc42-d2b2febb5399)
 
 **Create Script:**
+
 ![Create Script Real](https://github.com/user-attachments/assets/a496f92a-1ce7-48ee-8e24-99b2fc154aca)
 
 **Edit Script:**
+
 ![Edit Script Real](https://github.com/user-attachments/assets/ee7c1154-a706-437c-85d3-4fe50d6a1b25)
 
 **Create Character:**
+
 ![Create Character Real](https://github.com/user-attachments/assets/d06005f1-2889-4574-a2d1-d99c85add22e)
 
 **Edit Character:**
+
 ![Edit Character Real](https://github.com/user-attachments/assets/425eb310-d554-408d-8bff-16bac2892aad)
 
 ## API Specification Examples
