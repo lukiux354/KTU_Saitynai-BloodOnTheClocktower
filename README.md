@@ -141,7 +141,7 @@ The API uses **JWT (JSON Web Tokens)**. A valid token must be included in the re
 
 ![Edit Character Real](https://github.com/user-attachments/assets/425eb310-d554-408d-8bff-16bac2892aad)
 
-#API Specification
+## API Specification
 
 ### GET /api/scripts
 
