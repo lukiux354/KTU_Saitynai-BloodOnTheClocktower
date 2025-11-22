@@ -141,34 +141,1251 @@ The API uses **JWT (JSON Web Tokens)**. A valid token must be included in the re
 
 ![Edit Character Real](https://github.com/user-attachments/assets/425eb310-d554-408d-8bff-16bac2892aad)
 
-## API Specification Examples
+### GET /api/scripts
 
-### Scripts
-* `GET /api/scripts` - List all scripts.
-* `GET /api/scripts/{id}` - Get script details.
-* `POST /api/scripts` - Create a script.
-    ```json
+
+
+Fetches a list of scripts.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Example Request:
+
+
+
+```http
+
+GET http://localhost:5000/api/scripts
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+[
+
     {
-      "title": "Testing",
-      "description": "Third script."
-    }
-    ```
 
-### Characters
-* `GET /api/scripts/{id}/characters` - List characters in a script.
-* `POST /api/scripts/{id}/characters` - Add a character.
-    ```json
+        "id": 5,
+
+        "title": "Trouble Brewing",
+
+        "description": "This is an original BOTC script. For beginners",
+
+        "createdOn": "2024-12-17T17:06:05.035702+00:00"
+
+    },
+
     {
-      "title": "Empath",
-      "body": "Neighbors evil SECOND"
+
+        "id": 10,
+
+        "title": "Bad Moon Rising",
+
+        "description": "More advanced script where death is information. Recommended for intermediate and expert players.",
+
+        "createdOn": "2024-12-19T18:10:48.304944+00:00"
+
+    },
+
+    {
+
+        "id": 11,
+
+        "title": "Sects & Violets",
+
+        "description": "More advanced script with madness and a lot of misinformation. Recommended for intermediate players.",
+
+        "createdOn": "2024-12-19T18:11:59.753005+00:00"
+
     }
-    ```
 
-### Auth
-* `POST /api/accounts` - Register a new user.
-* `POST /api/login` - Log in and receive a JWT token.
+]
 
-*(See full documentation for all endpoints and response bodies)*
+```
+
+
+
+---
+
+
+
+### GET /api/scripts/{scriptId}
+
+
+
+Fetches details for a specific script.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Example Request:
+
+
+
+```http
+
+GET http://localhost:5000/api/scripts/10
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+{
+
+    "id": 10,
+
+    "title": "Bad Moon Rising",
+
+    "description": "More advanced script where death is information. Recommended for intermediate and expert players.",
+
+    "createdOn": "2024-12-19T18:10:48.304944+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### POST /api/scripts
+
+
+
+Creates a new script.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Body:
+
+
+
+```http
+
+{
+
+  "title": "Testing",
+
+  "description": "Third script."
+
+}
+
+```
+
+
+
+### Example Request:
+
+
+
+```http
+
+POST http://localhost:5000/api/scripts
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 201
+
+{
+
+    "id": 12,
+
+    "title": "Testing",
+
+    "description": "Third script.",
+
+    "createdOn": "2024-12-19T19:39:35.3378733+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### PUT /api/scripts/{scriptId}
+
+
+
+Updates the description of an existing script.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Body:
+
+
+
+```http
+
+{
+
+  "description": "Updated for demo.."
+
+}
+
+```
+
+
+
+### Example Request:
+
+
+
+```http
+
+PUT http://localhost:5000/api/scripts/32
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+{
+
+    "id": 12,
+
+    "title": "Testing",
+
+    "description": "Updated for demo..",
+
+    "createdOn": "2024-12-19T19:39:35.337873+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### DELETE /api/scripts/{scriptId}
+
+
+
+Deletes a specific script.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Example Request:
+
+
+
+```http
+
+DELETE http://localhost:5000/api/scripts/12
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 204
+
+```
+
+
+
+---
+
+
+
+## Recipies
+
+
+
+### GET /api/scripts/{scriptId}/characters
+
+
+
+Fetches a list of characters.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Example Request:
+
+
+
+```http
+
+GET http://localhost:5000/api/scripts/10/characters
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+[
+
+    {
+
+        "id": 30,
+
+        "title": "Lunatic",
+
+        "body": "You think you are a Demon, but you are not. The Demon knows who you are & who you choose at night.",
+
+        "createdOn": "2024-12-19T18:13:18.407073+00:00"
+
+    },
+
+    {
+
+        "id": 31,
+
+        "title": "Tinker",
+
+        "body": "You might die at any time.",
+
+        "createdOn": "2024-12-19T18:13:31.464228+00:00"
+
+    },
+
+    {
+
+        "id": 32,
+
+        "title": "Pukka",
+
+        "body": "Each night, choose a player: they are poisoned. The previously poisoned player dies then becomes healthy.",
+
+        "createdOn": "2024-12-19T18:13:48.31974+00:00"
+
+    }
+
+]
+
+```
+
+
+
+---
+
+
+
+### GET /api/scripts/{scriptId}/characters/{characterId}
+
+
+
+Fetches details for a specific character.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Example Request:
+
+
+
+```http
+
+GET http://localhost:5000/api/scripts/10/characters/32
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+{
+
+    "id": 32,
+
+    "title": "Pukka",
+
+    "body": "Each night, choose a player: they are poisoned. The previously poisoned player dies then becomes healthy.",
+
+    "createdOn": "2024-12-19T18:13:48.31974+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### POST  /api/scripts/{scriptId}/characters
+
+
+
+Creates a new character.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Body:
+
+
+
+```http
+
+{
+
+  "title": "Empath",
+
+  "body": "Neighbors evil SECOND"
+
+}
+
+```
+
+
+
+### Example Request:
+
+
+
+```http
+
+POST http://localhost:5000/api/scripts/{scriptId}/characters
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 201
+
+{
+
+    "id": 33,
+
+    "title": "Empath",
+
+    "body": "Neighbors evil SECOND",
+
+    "createdOn": "2024-12-19T19:49:01.2639625+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### PUT  /api/scripts/{scriptId}/characters/{characterId}
+
+
+
+Updates the description of an existing character.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Body:
+
+
+
+```http
+
+{
+
+  "body": "This role doesnt exist."
+
+}
+
+```
+
+
+
+### Example Request:
+
+
+
+```http
+
+PUT http://localhost:5000/api/scripts/10/characters/33
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+{
+
+    "id": 33,
+
+    "title": "Empath",
+
+    "body": "This role doesnt exist.",
+
+    "createdOn": "2024-12-19T19:49:01.263962+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### DELETE  /api/scripts/{scriptId}/characters/{characterId}
+
+
+
+Deletes a specific character.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Example Request:
+
+
+
+```http
+
+DELETE http://localhost:5000/api/scripts/10/characters/33
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 204
+
+```
+
+
+
+---
+
+
+
+## Comments
+
+
+
+### GET /api/scripts/{scriptId}/characters/{characterId}/comments
+
+
+
+Fetches a list of comments.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Example Request:
+
+
+
+```http
+
+GET http://localhost:5000/api/scripts/5/characters/7/comments
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+[
+
+    {
+
+        "id": 5,
+
+        "content": "I think this character is pretty boring..",
+
+        "createdOn": "2024-12-17T23:29:11.483055+00:00"
+
+    },
+
+    {
+
+        "id": 6,
+
+        "content": "Classic",
+
+        "createdOn": "2024-12-17T23:29:19.386892+00:00"
+
+    }
+
+]
+
+```
+
+
+
+---
+
+
+
+### GET /api/scripts/{scriptId}/characters/{characterId}/comments/{commentId}
+
+
+
+Fetches details for a specific comment.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Example Request:
+
+
+
+```http
+
+GET http://localhost:5000/api/scripts/5/characters/7/comments/5
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+{
+
+   "id": 5,
+
+    "content": "I think this character is pretty boring..",
+
+    "createdOn": "2024-12-17T23:29:11.483055+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### POST  /api/scripts/{scriptId}/characters/{characterId}/comments
+
+
+
+Creates a new comment.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Body:
+
+
+
+```http
+
+{
+
+  "content": "Demo comment 2"
+
+}
+
+```
+
+
+
+### Example Request:
+
+
+
+```http
+
+POST http://localhost:5000/api/scripts/5/characters/7/comments
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 201
+
+{
+
+    "id": 8,
+
+    "content": "Demo comment 2",
+
+    "createdOn": "2024-12-19T20:02:00.8110099+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### PUT  /api/scripts/{scriptId}/characters/{characterId}/comments/{commentId}
+
+
+
+Updates the description of an existing comment.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Body:
+
+
+
+```http
+
+{
+
+  "content": "I love this character.... Not really"
+
+}
+
+```
+
+
+
+### Example Request:
+
+
+
+```http
+
+PUT http://localhost:5000/api/scripts/5/characters/7/comments/8
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+{
+
+    "id": 8,
+
+    "content": "I love this character.... Not really",
+
+    "creationDate": "2024-12-19T20:02:00.8110099+00:00"
+
+}
+
+```
+
+
+
+---
+
+
+
+### DELETE  /api/scripts/{scriptId}/characters/{characterId}/comments/{commentId}
+
+
+
+Deletes a specific comment.
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | Yes       |
+
+
+
+### Example Request:
+
+
+
+```http
+
+DELETE http://localhost:5000/api/characters/5/recipies/7/comments/8
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 204
+
+```
+
+
+
+---
+
+
+
+## Autorizacija
+
+
+
+### POST api/accounts
+
+
+
+Registers new user
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Body
+
+```http
+
+{
+
+    "userName": "lukas",
+
+    "Email": "luksonas@email.com",
+
+    "Password": "Lukas1?sunkus"
+
+}
+
+```
+
+
+
+### Example Request:
+
+```http
+
+POST http://localhost:5000/api/accounts
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 201
+
+```
+
+
+
+---
+
+
+
+### POST api/login
+
+
+
+Logs a user in
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Body
+
+```http
+
+{
+
+    "userName": "lukas",
+
+    "Password": "Lukas1?sunkus"
+
+}
+
+```
+
+
+
+### Example Request:
+
+```http
+
+POST http://localhost:5000/api/login
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+{
+
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibHVrYXNuYXZpY2thcyIsImp0aSI6ImQxMjc3ZjFmLWQyYTUtNGYyOC04NjdiLWQxNjhkN2QzMGM0OSIsInN1YiI6IjFhM2NiM2E4LTBiZGYtNDJkNi04MjkwLWJkM2M4OTE1MDM1MCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkZvcnVtVXNlciIsImV4cCI6MTczNDY0MDAxMywiaXNzIjoiTHVrYXMiLCJhdWQiOiJUcnVzdGVkQ2xpZW50In0.mzOwPzG1LzgpkNzSL0tNI6GWZtOk41HxbF0ibMvMrS4"
+
+}
+
+```
+
+
+
+---
+
+
+
+### POST api/logout
+
+
+
+Logs a user out
+
+
+
+### Resource Information:
+
+
+
+| Property                | Value     |
+
+|-------------------------|-----------|
+
+| Response format         | JSON      |
+
+| Requires authentication | No        |
+
+
+
+### Example Request:
+
+```http
+
+POST http://localhost:5000/api/logout
+
+```
+
+
+
+### Response
+
+
+
+```http
+
+Status 200
+
+```
 
 ## Conclusions
 
